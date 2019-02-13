@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace BildProgram
 {
@@ -47,8 +48,15 @@ namespace BildProgram
 
                 ImageViewWindow.Source = bitmap;
 
+                //foreach(var color in bitmap.Palette.Colors)
+                //{
+                //    Debug.WriteLine(color);
+                //}
+
+                //bitmap.CopyPixels()
                 //bitmap.UriSource = null;
             }
+            
         }
 
         private void TestingButton()
@@ -183,7 +191,8 @@ namespace BildProgram
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            DrawOnCertainPixel();
+            DrawOnePixel(new Point(20, 30), new Point(21, 31));
+            //DrawOnCertainPixel();
 
             // draw pixels on original picture
             //DrawNewPixels();
@@ -193,6 +202,50 @@ namespace BildProgram
 
             // grayscale image
             //TestingButton();
+        }
+
+        void DrawOnePixel(Point pt1, Point pt2)
+        {
+            DrawingVisual drawVis = new DrawingVisual();
+            using (DrawingContext dc = drawVis.RenderOpen())
+            {
+                dc.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+                // Drawing a line with PIXELS
+                for (int i = 0; i < 30; i++)
+                {
+                    dc.DrawRectangle(Brushes.Red, null, new Rect(pt1, pt2));
+                    pt1.X += 1;
+                    pt1.Y += 1;
+                    pt2.X += 1;
+                    pt2.Y += 1;
+                }
+
+
+
+            }
+
+            RenderTargetBitmap rtb = new RenderTargetBitmap(bitmap.PixelWidth, bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
+            rtb.Render(drawVis);
+
+            ImageViewWindow.Source = rtb;
+        }
+
+        private void SavePicButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void SaveCurrentPicture(RenderTargetBitmap rtb)
+        {
+            //SAVE IMG TO.JPG WOOOOOOOOOOOORKS!!!!!!!!!!!!!!!!!!!!!!!
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(rtb));
+
+            using (var fileStream = new System.IO.FileStream("myImage.jpg", System.IO.FileMode.Create))
+            {
+                encoder.Save(fileStream);
+            }
         }
 
         //public void ToGrayScale(Bitmap Bmp)
