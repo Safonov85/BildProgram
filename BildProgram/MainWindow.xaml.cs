@@ -61,6 +61,7 @@ namespace BildProgram
 
         private void TestingButton()
         {
+            // If no image is loaded --- AVOID NULL REFERENCE
             if(ImageViewWindow.Source == null)
             {
                 return;
@@ -110,6 +111,8 @@ namespace BildProgram
 
         void DrawNewPixels()
         {
+            
+
             DrawingVisual drawVis = new DrawingVisual();
             using (DrawingContext dc = drawVis.RenderOpen())
             {
@@ -153,7 +156,9 @@ namespace BildProgram
             //{
             //    encoder.Save(fileStream);
             //}
-
+            //bitmap.CopyPixels()
+            
+            //int index = y * stride + 4 * x;
 
         }
 
@@ -206,6 +211,14 @@ namespace BildProgram
 
         void DrawOnePixel(Point pt1, Point pt2)
         {
+            // If no image is loaded --- AVOID NULL REFERENCE
+            if (ImageViewWindow.Source == null)
+            {
+                return;
+            }
+
+            // Draw Red Line And Circle in the middle of PICTURE
+
             DrawingVisual drawVis = new DrawingVisual();
             using (DrawingContext dc = drawVis.RenderOpen())
             {
@@ -221,7 +234,7 @@ namespace BildProgram
                     pt2.Y += 1;
                 }
 
-
+                dc.DrawEllipse(Brushes.Green, new Pen(Brushes.HotPink, 3), new Point(bitmap.PixelWidth/2, bitmap.PixelHeight/2), 60, 60);
 
             }
 
@@ -229,6 +242,16 @@ namespace BildProgram
             rtb.Render(drawVis);
 
             ImageViewWindow.Source = rtb;
+
+            int stride = bitmap.PixelWidth * 4;
+            int size = bitmap.PixelHeight * stride;
+            byte[] pixels = new byte[size];
+            bitmap.CopyPixels(pixels, stride, 0);
+
+            foreach (var pixel in pixels)
+            {
+                Debug.WriteLine(pixel);
+            }
         }
 
         private void SavePicButton_Click(object sender, RoutedEventArgs e)
