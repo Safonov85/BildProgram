@@ -55,6 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DetectAndMarkPixels.cs" />
+    <Compile Include="ImagePixelsValue.cs" />
+    <Compile Include="PixelPosition.cs" />
+    <Compile Include="RGBaValue.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
