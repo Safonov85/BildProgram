@@ -27,6 +27,9 @@ namespace BildProgram
         BitmapImage bitmap = new BitmapImage();
         ImagePixelsValue imagePixelValue = new ImagePixelsValue();
         DetectAndMarkPixels detectPixel = new DetectAndMarkPixels();
+        Random rand = new Random();
+        DetectColorPixel detectColorPix = new DetectColorPixel();
+        bool checkIfSliderIsWorking = false;
 
         public MainWindow()
         {
@@ -83,7 +86,6 @@ namespace BildProgram
 
             ImageViewWindow.Source = grayBitmap;
 
-            
 
             //BitmapEncoder encoder = new PngBitmapEncoder();
             //encoder.Frames.Add(BitmapFrame.Create(grayBitmap));
@@ -168,23 +170,6 @@ namespace BildProgram
 
         }
 
-        public BitmapSource ImageSource
-        {
-            get
-            {
-                PixelFormat pf = PixelFormats.Bgr32;
-                int width = 200;
-                int height = 200;
-                int rawStride = (width * pf.BitsPerPixel + 7) / 8;
-                byte[] rawImage = new byte[rawStride * height];
-
-                Random value = new Random();
-                value.NextBytes(rawImage);
-
-                return BitmapSource.Create(width, height, 96, 96, pf, null, rawImage, rawStride);
-            }
-        }
-
         void RotateImage()
         {
             TransformedBitmap myRotatedBitmapSource = new TransformedBitmap();
@@ -201,7 +186,10 @@ namespace BildProgram
 
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
-            detectPixel.DrawRedPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue, (int)SliderIntencity.Value);
+            //detectPixel.DrawRedPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue, (int)SliderIntencity.Value);
+            detectColorPix.DrawPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue,
+                (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked);
+            Debug.WriteLine(checkboxTest.IsChecked);
         }
 
         void DrawRedPixelsOnRegion()
@@ -218,17 +206,7 @@ namespace BildProgram
             using (DrawingContext dc = drawVis.RenderOpen())
             {
                 dc.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
-
-                // Drawing a line with PIXELS
-                //for (int i = 0; i < 30; i++)
-                //{
-                //    dc.DrawRectangle(Brushes.Red, null, new Rect(pt1, pt2));
-                //    pt1.X += 1;
-                //    pt1.Y += 1;
-                //    pt2.X += 1;
-                //    pt2.Y += 1;
-                //}
-
+                
                 int stride = bitmap.PixelWidth * 4;
                 int size = bitmap.PixelHeight * stride;
                 byte[] pixels = new byte[size];
@@ -284,7 +262,8 @@ namespace BildProgram
 
         private void SavePicButton_Click(object sender, RoutedEventArgs e)
         {
-
+            RenderTargetBitmap rtb = (RenderTargetBitmap)ImageViewWindow.Source;
+            SaveCurrentPicture(rtb);
         }
 
         void SaveCurrentPicture(RenderTargetBitmap rtb)
@@ -301,30 +280,139 @@ namespace BildProgram
 
         private void SliderIntencity_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            detectPixel.DrawRedPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue, (int)SliderIntencity.Value);
+            if (checkIfSliderIsWorking == false)
+            {
+                return;
+            }
+            //detectPixel.DrawRedPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue, (int)SliderIntencity.Value);
+            
+            detectColorPix.DrawPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue,
+                                                (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked);
 
             Debug.WriteLine(SliderIntencity.Value);
         }
 
-        private void AutoGenerateButton_Click(object sender, RoutedEventArgs e)
+        void CreateALine()
         {
 
+            byte redCode = 255;
+            for (int j = 0; j < 250; j += 1)
+            {
+                for (int i = 0; i < 250; i++)
+                {
+                    // Create a Line  
+                    Line line = new Line();
+                    line.X1 = j;
+                    line.Y1 = i;
+                    line.X2 = j + 1;
+                    line.Y2 = i + 1;
+
+                    // Create a red Brush  
+                    SolidColorBrush redBrush = new SolidColorBrush();
+                    redBrush.Color = Color.FromRgb(redCode, (byte)i, (byte)i);
+
+                    // Set Line's width and color
+                    line.StrokeThickness = 1;
+                    line.Stroke = redBrush;
+                    
+
+                    // Add line to the Grid.
+                    GridMain.Children.Add(line);
+                    
+                }
+                redCode--;
+            }
+
+            //GridMain.Children.RemoveAt(59);
+            //GridMain.Children.RemoveAt(61);
+            //GridMain.Children.RemoveAt(62);
+            //GridMain.Children.RemoveAt(63);
+            //GridMain.Children.RemoveAt(64);
+
+            Debug.WriteLine(GridMain.Children.Count);
+
+            //DrawingVisual drawingvisual = new DrawingVisual();
+            //using (DrawingContext context = drawingvisual.RenderOpen())
+            //{
+            //    context.DrawRectangle(new VisualBrush(view), null, new Rect(new Point(), size));
+            //    context.Close();
+            //}
+
+            //ImageBrush imgBrush = new ImageBrush();
+            //imgBrush.ImageSource = GridMain.
+
+            //ImageViewWindow.Source = imgBrush.
         }
 
-        //public void ToGrayScale(Bitmap Bmp)
-        //{
-        //    int rgb;
-        //    Color c;
+        private void AutoGenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            DrawingVisual drawVis = new DrawingVisual();
 
-        //    for (int y = 0; y < Bmp.Height; y++)
-        //    {
-        //        for (int x = 0; x < Bmp.Width; x++)
-        //        {
-        //            c = Bmp.GetPixel(x, y);
-        //            rgb = (int)Math.Round(.299 * c.R + .587 * c.G + .114 * c.B);
-        //            Bmp.SetPixel(x, y, Color.FromArgb(255, (byte)rgb, (byte)rgb, (byte)rgb));
-        //        }
-        //    }
-        //}
+            //Rect rect = new Rect();
+
+            //rect.X = 0;
+            //rect.Y = 0;
+
+            CreateALine();
+
+            //using (DrawingContext dc = drawVis.RenderOpen())
+            //{
+            //    dc.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+
+            //    int stride = bitmap.PixelWidth * 4;
+            //    int size = bitmap.PixelHeight * stride;
+            //    byte[] pixels = new byte[size];
+            //    bitmap.CopyPixels(pixels, stride, 0);
+
+            //    int red = 0;
+            //    int currentPixelX = 0;
+            //    int currentPixelY = 0;
+            //    foreach (var pixel in pixels)
+            //    {
+            //        // REDIFY all the parts that are DARK
+            //        if (red == 0 && pixel < 50)
+            //        {
+            //            //int index = bitmap.PixelWidth * stride + 4 * bitmap.PixelHeight;
+            //            dc.DrawRectangle(Brushes.Red, null,
+            //                new Rect(new Point(currentPixelX, currentPixelY), new Point(currentPixelX + 1, currentPixelY + 1)));
+            //        }
+            //        //Debug.WriteLine(pixel);
+            //        //if(pixel == pixels[9])
+            //        //{
+            //        //    break;
+            //        //}
+
+
+            //        if (currentPixelX > bitmap.PixelWidth - 1)
+            //        {
+            //            currentPixelY++;
+            //            currentPixelX = 0;
+            //        }
+
+            //        if (red == 0)
+            //            currentPixelX++;
+
+            //        if (red == 3)
+            //        {
+            //            red = 0;
+            //            continue;
+            //        }
+            //        red++;
+            //    }
+
+            //    //dc.DrawEllipse(Brushes.Green, new Pen(Brushes.HotPink, 3), new Point(bitmap.PixelWidth/2, bitmap.PixelHeight/2), 60, 60);
+
+            //}
+
+            //RenderTargetBitmap rtb = new RenderTargetBitmap(bitmap.PixelWidth, bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
+            //rtb.Render(drawVis);
+
+            //ImageViewWindow.Source = rtb;
+        }
+
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            checkIfSliderIsWorking = true;
+        }
     }
 }

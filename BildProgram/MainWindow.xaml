@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BildProgram"
         mc:Ignorable="d"
-        Title="Bild Program" Height="873.221" Width="902.597" Background="#FFB6B6B6">
+        Title="Bild Program" Height="873.221" Width="902.597" Background="#FFB6B6B6" MouseEnter="Window_MouseEnter">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="16*"/>
@@ -13,8 +13,8 @@
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Left" Height="828" VerticalAlignment="Top" Width="881" Grid.ColumnSpan="2">
             <TabItem x:Name="MainImageTab" Header="Main">
-                <Grid Background="#FFE5E5E5">
-                    <Image x:Name="ImageViewWindow" Height="701" Margin="10,0,0,89" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="827" Stretch="None">
+                <Grid x:Name="GridMain" RenderOptions.EdgeMode="Aliased" Background="#FFE5E5E5">
+                    <Image x:Name="ImageViewWindow" Height="649" Margin="10,0,0,89" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="827" Stretch="None">
                         <Image.OpacityMask>
                             <SolidColorBrush Color="#FF99B4D1"/>
                         </Image.OpacityMask>
@@ -22,8 +22,9 @@
                     <Button x:Name="LoadImageButton" Content="Load" HorizontalAlignment="Left" Margin="714,732,0,0" VerticalAlignment="Top" Width="140" Height="58" Click="LoadImageButton_Click"/>
                     <Button x:Name="TestButton" Content="test" HorizontalAlignment="Left" Margin="10,732,0,0" VerticalAlignment="Top" Width="119" Height="58" Click="TestButton_Click"/>
                     <Button x:Name="SavePicButton" Content="Save Pic" HorizontalAlignment="Left" Margin="163,732,0,0" VerticalAlignment="Top" Width="120" Height="58" Click="SavePicButton_Click"/>
-                    <Slider x:Name="SliderIntencity" HorizontalAlignment="Left" Margin="314,744,0,0" VerticalAlignment="Top" Width="229" Background="#FF4D4D4D" BorderBrush="#FF1CAA5C" Foreground="White" Height="35" Maximum="250" RenderTransformOrigin="0.505,0.5" TickPlacement="Both" SmallChange="1" Value="230" ValueChanged="SliderIntencity_ValueChanged" IsSnapToTickEnabled="True" Minimum="210"/>
+                    <Slider x:Name="SliderIntencity" HorizontalAlignment="Left" Margin="314,744,0,0" VerticalAlignment="Top" Width="229" Background="#FF4D4D4D" BorderBrush="#FF1CAA5C" Foreground="White" Height="35" Maximum="170" RenderTransformOrigin="0.505,0.5" TickPlacement="Both" SmallChange="1" Value="100" ValueChanged="SliderIntencity_ValueChanged" IsSnapToTickEnabled="True" Minimum="50"/>
                     <Button x:Name="AutoGenerateButton" Content="Auto Generate Picture" HorizontalAlignment="Left" Margin="351,10,0,0" VerticalAlignment="Top" Width="139" Height="47" Click="AutoGenerateButton_Click"/>
+                    <CheckBox x:Name="checkboxTest" Content="Red Marks" HorizontalAlignment="Left" Margin="564,754,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="other">

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -28,7 +29,7 @@ namespace BildProgram
             //int red = 0;
             int currentPixelX = 0;
             int currentPixelY = 0;
-
+            
             for (int i = 0; i < pixelsRGBA.Length; i += 4)
             {
                 GetPixelValue.Add(new PixelPosition(currentPixelX, currentPixelY),

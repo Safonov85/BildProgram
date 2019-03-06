@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DetectAndMarkPixels.cs" />
+    <Compile Include="DetectColorPixel.cs" />
     <Compile Include="ImagePixelsValue.cs" />
     <Compile Include="PixelPosition.cs" />
     <Compile Include="RGBaValue.cs" />
