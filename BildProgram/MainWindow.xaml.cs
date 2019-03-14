@@ -187,9 +187,10 @@ namespace BildProgram
         private void TestButton_Click(object sender, RoutedEventArgs e)
         {
             //detectPixel.DrawRedPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue, (int)SliderIntencity.Value);
+            RedSlider.Value = 0.2;
             detectColorPix.DrawPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue,
-                (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked);
-            Debug.WriteLine(checkboxTest.IsChecked);
+                (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked, (float)RedSlider.Value);
+            //Debug.WriteLine(checkboxTest.IsChecked);
         }
 
         void DrawRedPixelsOnRegion()
@@ -287,9 +288,9 @@ namespace BildProgram
             //detectPixel.DrawRedPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue, (int)SliderIntencity.Value);
             
             detectColorPix.DrawPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue,
-                                                (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked);
+                                            (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked, (float)RedSlider.Value);
 
-            Debug.WriteLine(SliderIntencity.Value);
+            //Debug.WriteLine(SliderIntencity.Value);
         }
 
         void CreateALine()
@@ -329,7 +330,7 @@ namespace BildProgram
             //GridMain.Children.RemoveAt(63);
             //GridMain.Children.RemoveAt(64);
 
-            Debug.WriteLine(GridMain.Children.Count);
+            //Debug.WriteLine(GridMain.Children.Count);
 
             //DrawingVisual drawingvisual = new DrawingVisual();
             //using (DrawingContext context = drawingvisual.RenderOpen())
@@ -413,6 +414,18 @@ namespace BildProgram
         private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
             checkIfSliderIsWorking = true;
+        }
+
+        private void RedSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (checkIfSliderIsWorking == false)
+            {
+                return;
+            }
+
+            detectColorPix.DrawPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue,
+                (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked, (float)RedSlider.Value);
+            //Debug.WriteLine("BAAM");
         }
     }
 }

@@ -15,15 +15,13 @@ namespace BildProgram
     public class DetectColorPixel
     {
         public void DrawPixelsOnRegion(BitmapImage bitmap, Image ImageViewWindow,
-            Dictionary<PixelPosition, RGBaValue> pixelValue, int strengh, string color, bool redMark)
+            Dictionary<PixelPosition, RGBaValue> pixelValue, int strengh, string color, bool redMark, float blue)
         {
             // If no image is loaded --- AVOID NULL REFERENCE
             if (ImageViewWindow.Source == null)
             {
                 return;
             }
-
-            // Draw Red Line And Circle in the middle of PICTURE
 
             DrawingVisual drawVis = new DrawingVisual();
 
@@ -45,6 +43,19 @@ namespace BildProgram
                                          new Point(item.Key.PixelPositionX + 1, item.Key.PixelPositionY + 1)));
                         }
                     }
+
+                    //Parallel.ForEach(pixelValue, item =>
+                    //{
+                    //    if (item.Value.Green > item.Value.Red && item.Value.Green > item.Value.Blue
+                    //        && item.Value.Blue < strengh && item.Value.Red < strengh)
+                    //    {
+                    //        Thread.Sleep(10);
+                    //        int index = bitmap.PixelWidth * stride + 4 * bitmap.PixelHeight;
+                    //        dc.DrawRectangle(Brushes.Red, null,
+                    //            new Rect(new Point(item.Key.PixelPositionX, item.Key.PixelPositionY),
+                    //                     new Point(item.Key.PixelPositionX + 1, item.Key.PixelPositionY + 1)));
+                    //    }
+                    //});
                 }
             }
             else
@@ -81,7 +92,7 @@ namespace BildProgram
                             //    //Debug.WriteLine("BLUED !");
                             //}
 
-                            float b = (float)blued * 0.2f;
+                            float b = (float)blued * blue;
                             blued = (byte)b;
                             SolidColorBrush colorSwtich = new SolidColorBrush(Color.FromRgb(gtoR, rToG, blued));
 

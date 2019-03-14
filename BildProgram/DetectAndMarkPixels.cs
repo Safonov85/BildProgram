@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace BildProgram
 {
+    // Class is Obselete - Use DetectColorPixel instead
     public class DetectAndMarkPixels
     {
         public void DrawRedPixelsOnRegion(BitmapImage bitmap, Image ImageViewWindow,
