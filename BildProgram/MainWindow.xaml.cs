@@ -26,10 +26,11 @@ namespace BildProgram
     {
         BitmapImage bitmap = new BitmapImage();
         ImagePixelsValue imagePixelValue = new ImagePixelsValue();
-        DetectAndMarkPixels detectPixel = new DetectAndMarkPixels();
-        Random rand = new Random();
         DetectColorPixel detectColorPix = new DetectColorPixel();
         bool checkIfSliderIsWorking = false;
+
+        //DetectAndMarkPixels detectPixel = new DetectAndMarkPixels();
+        //Random rand = new Random();
 
         public MainWindow()
         {
@@ -111,10 +112,11 @@ namespace BildProgram
                 dc.DrawRectangle(Brushes.Green, null, new Rect(20, 20, 150, 100));
             }
 
-            RenderTargetBitmap rtb = new RenderTargetBitmap(bitmap.PixelWidth, bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
-            rtb.Render(drawVis);
+            RenderTargetBitmap targetBitmap = new RenderTargetBitmap(bitmap.PixelWidth,
+                            bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
+            targetBitmap.Render(drawVis);
 
-            ImageViewWindow.Source = rtb;
+            ImageViewWindow.Source = targetBitmap;
         }
 
         void DrawNewPixels()
@@ -223,7 +225,8 @@ namespace BildProgram
                     {
                         //int index = bitmap.PixelWidth * stride + 4 * bitmap.PixelHeight;
                         dc.DrawRectangle(Brushes.Red, null,
-                            new Rect(new Point(currentPixelX, currentPixelY), new Point(currentPixelX + 1, currentPixelY + 1)));
+                            new Rect(new Point(currentPixelX, currentPixelY),
+                            new Point(currentPixelX + 1, currentPixelY + 1)));
                     }
                     //Debug.WriteLine(pixel);
                     //if(pixel == pixels[9])
@@ -253,7 +256,8 @@ namespace BildProgram
 
             }
 
-            RenderTargetBitmap rtb = new RenderTargetBitmap(bitmap.PixelWidth, bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
+            RenderTargetBitmap rtb = new RenderTargetBitmap(bitmap.PixelWidth,
+                            bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
             rtb.Render(drawVis);
 
             ImageViewWindow.Source = rtb;
@@ -288,7 +292,7 @@ namespace BildProgram
             //detectPixel.DrawRedPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue, (int)SliderIntencity.Value);
             
             detectColorPix.DrawPixelsOnRegion(bitmap, ImageViewWindow, imagePixelValue.GetPixelValue,
-                                            (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked, (float)RedSlider.Value);
+                         (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked, (float)RedSlider.Value);
 
             //Debug.WriteLine(SliderIntencity.Value);
         }

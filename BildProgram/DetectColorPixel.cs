@@ -36,26 +36,11 @@ namespace BildProgram
                         if (item.Value.Green > item.Value.Red && item.Value.Green > item.Value.Blue
                             && item.Value.Blue < strengh && item.Value.Red < strengh)
                         {
-                            //Thread.Sleep(10);
-                            //int index = bitmap.PixelWidth * stride + 4 * bitmap.PixelHeight;
                             dc.DrawRectangle(Brushes.Red, null,
                                 new Rect(new Point(item.Key.PixelPositionX, item.Key.PixelPositionY),
                                          new Point(item.Key.PixelPositionX + 1, item.Key.PixelPositionY + 1)));
                         }
                     }
-
-                    //Parallel.ForEach(pixelValue, item =>
-                    //{
-                    //    if (item.Value.Green > item.Value.Red && item.Value.Green > item.Value.Blue
-                    //        && item.Value.Blue < strengh && item.Value.Red < strengh)
-                    //    {
-                    //        Thread.Sleep(10);
-                    //        int index = bitmap.PixelWidth * stride + 4 * bitmap.PixelHeight;
-                    //        dc.DrawRectangle(Brushes.Red, null,
-                    //            new Rect(new Point(item.Key.PixelPositionX, item.Key.PixelPositionY),
-                    //                     new Point(item.Key.PixelPositionX + 1, item.Key.PixelPositionY + 1)));
-                    //    }
-                    //});
                 }
             }
             else
@@ -105,10 +90,10 @@ namespace BildProgram
                 }
             }
 
-            RenderTargetBitmap rtb = new RenderTargetBitmap(bitmap.PixelWidth, bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
-            rtb.Render(drawVis);
+            RenderTargetBitmap targetBitmap = new RenderTargetBitmap(bitmap.PixelWidth, bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
+            targetBitmap.Render(drawVis);
 
-            ImageViewWindow.Source = rtb;
+            ImageViewWindow.Source = targetBitmap;
         }
     }
 }
