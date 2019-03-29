@@ -13,6 +13,7 @@ namespace BildProgram
 {
     public class ImagePixelsValue
     {
+        // variable created with self-made classes
         public Dictionary<PixelPosition, RGBaValue> GetPixelValue = new Dictionary<PixelPosition, RGBaValue>();
 
         public void CopyPixelRGBInfo(BitmapImage bitmap)
@@ -30,6 +31,7 @@ namespace BildProgram
             int currentPixelX = 0;
             int currentPixelY = 0;
             
+            // cycles through all the RGB for everypixel and sets them proper order in GetPixelValue "array"
             for (int i = 0; i < pixelsRGBA.Length; i += 4)
             {
                 GetPixelValue.Add(new PixelPosition(currentPixelX, currentPixelY),

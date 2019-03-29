@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BildProgram
 {
+    // class used for ImagePixelValue.GetPixelValue Variable/Object
     public class PixelPosition
     {
         public PixelPosition(int x, int y)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace BildProgram
 {
+    // class used for ImagePixelValue.GetPixelValue Variable/Object
     public class RGBaValue
     {
         public RGBaValue(byte r, byte g, byte b, byte a)
