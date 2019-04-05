@@ -65,17 +65,6 @@ namespace BildProgram
                                 r = r + 20;
                                 gtoR = (byte)r;
                             }
-                            //if (((float)blued * 0.5) > 0)
-                            //{
-                            //    int b = blued;
-                            //    b = b - 20;
-                            //    blued = (byte)b;
-                            //}
-                            //else
-                            //{
-                            //    blued = 0;
-                            //    //Debug.WriteLine("BLUED !");
-                            //}
 
                             float b = (float)blued * blue;
                             blued = (byte)b;
