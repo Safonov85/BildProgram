@@ -134,67 +134,67 @@ namespace BildProgram
                 (int)SliderIntencity.Value, "Green", (bool)checkboxTest.IsChecked, (float)RedSlider.Value);
         }
 
-        void DrawRedPixelsOnRegion()
-        {
-            // If no image is loaded --- AVOID NULL REFERENCE
-            if (ImageViewWindow.Source == null)
-            {
-                return;
-            }
+        //void DrawRedPixelsOnRegion()
+        //{
+        //    // If no image is loaded --- AVOID NULL REFERENCE
+        //    if (ImageViewWindow.Source == null)
+        //    {
+        //        return;
+        //    }
 
-            // Draw Red Line And Circle in the middle of PICTURE
+        //    // Draw Red Line And Circle in the middle of PICTURE
 
-            DrawingVisual drawVis = new DrawingVisual();
-            using (DrawingContext dc = drawVis.RenderOpen())
-            {
-                dc.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
+        //    DrawingVisual drawVis = new DrawingVisual();
+        //    using (DrawingContext dc = drawVis.RenderOpen())
+        //    {
+        //        dc.DrawImage(bitmap, new Rect(0, 0, bitmap.PixelWidth, bitmap.PixelHeight));
                 
-                int stride = bitmap.PixelWidth * 4;
-                int size = bitmap.PixelHeight * stride;
-                byte[] pixels = new byte[size];
-                bitmap.CopyPixels(pixels, stride, 0);
+        //        int stride = bitmap.PixelWidth * 4;
+        //        int size = bitmap.PixelHeight * stride;
+        //        byte[] pixels = new byte[size];
+        //        bitmap.CopyPixels(pixels, stride, 0);
 
-                int red = 0;
-                int currentPixelX = 0;
-                int currentPixelY = 0;
-                foreach (var pixel in pixels)
-                {
-                    // REDIFY all the parts that are DARK
-                    if (red == 0 && pixel < 50)
-                    {
-                        dc.DrawRectangle(Brushes.Red, null,
-                            new Rect(new Point(currentPixelX, currentPixelY),
-                            new Point(currentPixelX + 1, currentPixelY + 1)));
-                    }
+        //        int red = 0;
+        //        int currentPixelX = 0;
+        //        int currentPixelY = 0;
+        //        foreach (var pixel in pixels)
+        //        {
+        //            // REDIFY all the parts that are DARK
+        //            if (red == 0 && pixel < 50)
+        //            {
+        //                dc.DrawRectangle(Brushes.Red, null,
+        //                    new Rect(new Point(currentPixelX, currentPixelY),
+        //                    new Point(currentPixelX + 1, currentPixelY + 1)));
+        //            }
 
                     
-                    if (currentPixelX > bitmap.PixelWidth - 1)
-                    {
-                        currentPixelY++;
-                        currentPixelX = 0;
-                    }
+        //            if (currentPixelX > bitmap.PixelWidth - 1)
+        //            {
+        //                currentPixelY++;
+        //                currentPixelX = 0;
+        //            }
 
-                    if(red == 0)
-                        currentPixelX++;
+        //            if(red == 0)
+        //                currentPixelX++;
 
-                    if (red == 3)
-                    {
-                        red = 0;
-                        continue;
-                    }
-                    red++;
-                }
+        //            if (red == 3)
+        //            {
+        //                red = 0;
+        //                continue;
+        //            }
+        //            red++;
+        //        }
                 
-            }
+        //    }
 
-            RenderTargetBitmap rtb = new RenderTargetBitmap(bitmap.PixelWidth,
-                            bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
-            rtb.Render(drawVis);
+        //    RenderTargetBitmap rtb = new RenderTargetBitmap(bitmap.PixelWidth,
+        //                    bitmap.PixelHeight, 96, 96, PixelFormats.Pbgra32);
+        //    rtb.Render(drawVis);
 
-            ImageViewWindow.Source = rtb;
+        //    ImageViewWindow.Source = rtb;
 
             
-        }
+        //}
 
         private void SavePicButton_Click(object sender, RoutedEventArgs e)
         {
@@ -226,43 +226,45 @@ namespace BildProgram
 
         }
 
-        void CreateALine()
-        {
+        //void CreateALine()
+        //{
 
-            byte redCode = 255;
-            for (int j = 0; j < 250; j += 1)
-            {
-                for (int i = 0; i < 250; i++)
-                {
-                    // Create a Line  
-                    Line line = new Line();
-                    line.X1 = j;
-                    line.Y1 = i;
-                    line.X2 = j + 1;
-                    line.Y2 = i + 1;
+        //    byte redCode = 255;
+        //    for (int j = 0; j < 250; j += 1)
+        //    {
+        //        for (int i = 0; i < 250; i++)
+        //        {
+        //            // Create a Line  
+        //            Line line = new Line();
+        //            line.X1 = j;
+        //            line.Y1 = i;
+        //            line.X2 = j + 1;
+        //            line.Y2 = i + 1;
 
-                    // Create a red Brush  
-                    SolidColorBrush redBrush = new SolidColorBrush();
-                    redBrush.Color = Color.FromRgb(redCode, (byte)i, (byte)i);
+        //            // Create a red Brush  
+        //            SolidColorBrush redBrush = new SolidColorBrush();
+        //            redBrush.Color = Color.FromRgb(redCode, (byte)i, (byte)i);
 
-                    // Set Line's width and color
-                    line.StrokeThickness = 1;
-                    line.Stroke = redBrush;
+        //            // Set Line's width and color
+        //            line.StrokeThickness = 1;
+        //            line.Stroke = redBrush;
                     
 
-                    // Add line to the Grid.
-                    GridMain.Children.Add(line);
+        //            // Add line to the Grid.
+        //            GridMain.Children.Add(line);
                     
-                }
-                redCode--;
-            }
-        }
+        //        }
+        //        redCode--;
+        //    }
+        //}
 
         private void AutoGenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            DrawingVisual drawVis = new DrawingVisual();
+            //DrawingVisual drawVis = new DrawingVisual();
 
-            CreateALine();
+            //CreateALine();
+
+            MessageBox.Show("Unavaliable at the moment. Code exists, but commented out.");
         }
 
         private void Window_MouseEnter(object sender, MouseEventArgs e)
